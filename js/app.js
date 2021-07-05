@@ -1,76 +1,82 @@
-
-
 am4core.useTheme(am4themes_animated);
 
 // Create chart instance
 var chart = am4core.create("chartdiv", am4charts.XYChart);
 
 // Add data
-chart.data = [{
-  "day": "Day 0",
-  "date":"23 May, 2021",
-  "limit": 0,
-  "fb": "09.59am",
-  "ln": "2.00pm",
-  "tw": "09.45pm"
-}, {
-  "day": "Day 1",
-  "date":"24 May, 2021",
-  "limit": 1,
-  "fb": "10.59am",
-  "ln": "3.00pm",
-  "tw": "10.45pm"
-}, {
-  "day": "Day 3",
-  "date":"25 May, 2021",
-  "limit": 0.5,
-  "fb": "11.59am",
-  "ln": "4.00pm",
-  "tw": "5.45pm"
-}, {
-  "day": "Day 4",
-  "date":"26 May, 2021",
-  "limit":1.5,
-  "fb": "1.19am",
-  "ln": "3.00pm",
-  "tw": "2.45pm"
-}, {
-  "day": "Day 5",
-  "date":"27 May, 2021",
-  "limit": 1,
-  "fb": "1.19am",
-  "ln": "3.00pm",
-  "tw": "2.45pm"
-},
- {
-  "day": "Day 6",
-  "date":"28 May, 2021",
-  "limit": 1,
-  "fb": "12.59am",
-  "ln": "6.00pm",
-  "tw": "8.45pm"
-},{
-  "day": "Day 7",
-  "date":"29 May, 2021",
-  "limit": 1,
-  "fb": "3.59am",
-  "ln": "2.00pm",
-  "tw": "6.45pm"
-},{
-  "day": "Day 8",
-  "date":"30 May, 2021",
-  "limit": 1,
-  "fb": "3.59am",
-  "ln": "2.00pm",
-  "tw": "6.45pm"
-},{
-  "day": "Day 9",
-  "date":"31 May, 2021",
-  "limit": 1,
-  "fb": "3.59am",
-  "ln": "2.00pm",
-  "tw": "6.45pm"
-}
+chart.data = [
+  {
+    day: "Day 0",
+    date: "23 May, 2021",
+    limit: 10,
+    fb: "09.59am",
+    ln: "2.00pm",
+    tw: "09.45pm",
+  },
+  {
+    day: "Day 1",
+    date: "24 May, 2021",
+    limit: 12,
+    fb: "10.59am",
+    ln: "3.00pm",
+    tw: "10.45pm",
+  },
+  {
+    day: "Day 3",
+    date: "25 May, 2021",
+    limit: 17,
+    fb: "11.59am",
+    ln: "4.00pm",
+    tw: "5.45pm",
+  },
+  {
+    day: "Day 4",
+    date: "26 May, 2021",
+    limit: 18,
+    fb: "1.19am",
+    ln: "3.00pm",
+    tw: "2.45pm",
+  },
+  {
+    day: "Day 5",
+    date: "27 May, 2021",
+    limit: 19,
+    fb: "1.19am",
+    ln: "3.00pm",
+    tw: "2.45pm",
+  },
+  {
+    day: "Day 6",
+    date: "28 May, 2021",
+    limit: 10,
+    fb: "12.59am",
+    ln: "6.00pm",
+    tw: "8.45pm",
+  },
+  {
+    day: "Day 7",
+    date: "29 May, 2021",
+    limit: 10,
+    fb: "3.59am",
+    ln: "2.00pm",
+    tw: "6.45pm",
+  },
+  {
+    day: "Day 8",
+    date: "30 May, 2021",
+    limit: 10,
+    fb: "3.59am",
+    ln: "2.00pm",
+    tw: "6.45pm",
+  },
+  {
+    day: "Day 9",
+    date: "31 May, 2021",
+    limit: 10,
+    fb: "3.59am",
+    ln: "2.00pm",
+    tw: "6.45pm",
+  },
 ];
 
 // Create axes
@@ -83,14 +89,13 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.renderer.baseGrid.disabled = true;
 valueAxis.renderer.grid.template.disabled = true;
 
-var tooltipHTML = 
-`
+var tooltipHTML = `
 <div class="tip">
 <div class="row">
-  <div class="col-left">{date} <span class="day__tag">{day}</span></div>
-  <div class="col-right">96</div>
+  <div class="col-left header">{date} <span class="day__tag">{day}</span></div>
+  <div class="col-right header__count">96</div>
 </div>
-<div class="row"> 
+<div class="row active"> 
   <div class="col-left">
     <span class="icon-wrap icon__1 rounded"><i class="fas fa-check-circle icon__check"></i></span>
     <span class="icon-wrap icon__2 fb-icon"><i class="fab fa-facebook-f"></i></span>
@@ -126,21 +131,26 @@ series.strokeWidth = 3;
 series.tensionX = 0.7;
 series.bullets.push(new am4charts.CircleBullet());
 
-
-series.tooltip.getFillFromObject = false;
-series.tooltip.background.fill = am4core.color("red");
-series.tooltip.label.fill = am4core.color("red");
-
 series.tooltipHTML = tooltipHTML;
 series.tooltip.label.interactionsEnabled = true;
 series.tooltip.pointerOrientation = "vertical";
 
+series.tooltip.getFillFromObject = false;
+series.tooltip.background.fillOpacity = 10;
 
-  series.tooltip.getFillFromObject = false;
-  series.tooltip.background.fill = am4core.color("#fff");
-  series.tooltip.background.color = am4core.color("#fff");
-  
-  series.smoothing = "monotoneX";
+var XaxisTooltip = categoryAxis.tooltip;
+XaxisTooltip.background.fill = am4core.color("#0c78eb");
+XaxisTooltip.background.strokeWidth = 0;
+XaxisTooltip.background.cornerRadius = 3;
+XaxisTooltip.background.pointerLength = 0;
+XaxisTooltip.dy = 5;
+
+var YaxisTooltips = valueAxis.tooltip;
+YaxisTooltips.background.fill = am4core.color("#0c78eb");
+YaxisTooltips.background.strokeWidth = 0;
+YaxisTooltips.background.cornerRadius = 3;
+YaxisTooltips.background.pointerLength = 0;
+YaxisTooltips.dy = 5;
 
 /* Add legend */
 chart.legend = new am4charts.Legend();
